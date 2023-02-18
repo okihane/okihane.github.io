@@ -24,9 +24,9 @@
 					<select class="form-control mx-3" id="model_select" style="background-color: #4D4B4B;color: #D3D3D3;">
 						<option value="text-davinci-003">Davinci-3</option>
 						<option value="text-davinci-002">Davinci-2</option>
-						<option value="code-davinci-002">code-davinci</option>
+						<!--<option value="code-davinci-002">code-davinci</option>
 						<option value="text-curie-001">Curie</option>
-						<option value="text-babbage-001">Babbage</option>
+						<option value="text-babbage-001">Babbage</option>-->
 					</select>
 					<label for="token_number" style="color:#D3D3D3;">词数:</label>
 					<input type="number" class="form-control mx-3" id="token_number" value="300"
@@ -73,7 +73,7 @@
 				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 					var response = JSON.parse(this.responseText);
 					document.getElementById("output_text").value = removeFirstLine(response.choices[0].text).trim();
-				} else {document.getElementById("output_text").value = removeFirstLine("请求出错").trim();}
+				} else {document.getElementById("output_text").value = removeFirstLine("请求出错，请稍后再试！").trim();}
 			};
 
 			var data = JSON.stringify({
