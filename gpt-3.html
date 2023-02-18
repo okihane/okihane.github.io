@@ -1,0 +1,102 @@
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+		</script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+		</script>
+		<title>GPT-3体验</title>
+	</head>
+	<body style="background-color: #292929;">
+		<div class="container mt-5">
+			<!-- <h2>GPT-3 Chat</h2> -->
+			<form id="chat-form">
+				<div class="form-group form-inline">
+					<label for="model_select" style="color:#D3D3D3;">模型:</label>
+					<select class="form-control mx-3" id="model_select" style="background-color: #4D4B4B;color: #D3D3D3;">
+						<option value="text-davinci-003">Davinci-3</option>
+						<option value="text-davinci-002">Davinci-2</option>
+						<option value="code-davinci-002">code-davinci</option>
+						<option value="text-curie-001">Curie</option>
+						<option value="text-babbage-001">Babbage</option>
+					</select>
+					<label for="token_number" style="color:#D3D3D3;">词数:</label>
+					<input type="number" class="form-control mx-3" id="token_number" value="300"
+						placeholder="请输入Token数" style="background-color: #4D4B4B;color: #D3D3D3;"/>
+					<label for="temperature" style="color:#D3D3D3;">随机:</label>
+					<input type="number" class="form-control mx-3" id="temperature" step="0.1" min="0" max="2" style="background-color: #4D4B4B;color: #D3D3D3;"
+						value="0.5" />
+				</div>
+
+				<div class="form-group">
+					<label for="input_text" style="color:#D3D3D3;">输入:</label>
+					<textarea class="form-control" id="input_text" rows="3" style="background-color: #4D4B4B;color: #D3D3D3;"></textarea>
+				</div>
+				<div class="form-group"
+					<label for="output_text" style="color:#D3D3D3;">输出:</label>
+					<textarea class="form-control" id="output_text" rows="12" style="background-color: #4D4B4B;color: #D3D3D3;" readonly></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary" style="color:#D3D3D3;">提问</button>
+				<a href='https://cway.top/post/1058.html' target="_blank"><button type="button" class="btn btn-success" style="color:#D3D3D3;">帮助</button></a>
+			</form>
+		</div>
+
+	</body>
+	<script>
+		document.getElementById('chat-form').addEventListener('submit', submitForm);
+
+		function submitForm(event) {
+			event.preventDefault();
+			document.getElementById('output_text').value = "请稍后...";
+			// 获取GPT API KEY见：https://platform.openai.com/account/api-keys
+			const apiKey = "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"; //填写你的chatgpt api key
+			// 调用 GPT-3 API
+			var input = document.getElementById("input_text").value;
+			var model = document.getElementById("model_select").value;
+			var tokenNum = document.getElementById("token_number").value;
+			var temperature = document.getElementById("temperature").value;
+
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "https://api.openai.com/v1/completions", true);
+			xhr.setRequestHeader("Content-Type", "application/json");
+			xhr.setRequestHeader("Authorization", `Bearer ${apiKey}`);
+
+			xhr.onreadystatechange = function() {
+				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+					var response = JSON.parse(this.responseText);
+					document.getElementById("output_text").value = removeFirstLine(response.choices[0].text).trim();
+				} else {document.getElementById("output_text").value = removeFirstLine("请求出错").trim();}
+			};
+
+			var data = JSON.stringify({
+				prompt: input,
+				max_tokens: parseInt(tokenNum),
+				temperature: parseFloat(temperature),
+				n: 1,
+				stop: "",
+				model: model
+			});
+
+			xhr.send(data);
+		}
+		
+		function removeFirstLine(text) {
+		  if (text.startsWith("?") || text.startsWith("？")) {
+		    return text.replace(/^[^\n]*\n?/, "");
+		  } else {
+		    return text;
+		  }
+		}
+	</script>
+	<script>
+!function(p){"use strict";!function(t){var s=window,e=document,i=p,c="".concat("https:"===e.location.protocol?"https://":"http://","sdk.51.la/js-sdk-pro.min.js"),n=e.createElement("script"),r=e.getElementsByTagName("script")[0];n.type="text/javascript",n.setAttribute("charset","UTF-8"),n.async=!0,n.src=c,n.id="LA_COLLECT",i.d=n;var o=function(){s.LA.ids.push(i)};s.LA?s.LA.ids&&o():(s.LA=p,s.LA.ids=[],o()),r.parentNode.insertBefore(n,r)}()}({id:"JHKHTVEZGXTUUGtT",ck:"JHKHTVEZGXTUUGtT"});
+</script>
+</html>
