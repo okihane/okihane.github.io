@@ -24,9 +24,9 @@
 					<select class="form-control mx-3" id="model_select" style="background-color: #4D4B4B;color: #D3D3D3;">
 						<option value="text-davinci-003">Davinci-3</option>
 						<option value="text-davinci-002">Davinci-2</option>
-						<!--<option value="code-davinci-002">code-davinci</option>
+						<option value="code-davinci-002">code-davinci</option>
 						<option value="text-curie-001">Curie</option>
-						<option value="text-babbage-001">Babbage</option>-->
+						<option value="text-babbage-001">Babbage</option>
 					</select>
 					<label for="token_number" style="color:#D3D3D3;">词数:</label>
 					<input type="number" class="form-control mx-3" id="token_number" value="300"
@@ -45,7 +45,7 @@
 					<textarea class="form-control" id="output_text" rows="12" style="background-color: #4D4B4B;color: #D3D3D3;" readonly></textarea>
 				</div>
 				<button type="submit" class="btn btn-primary" style="color:#D3D3D3;">提问</button>
-				<a href='https://cway.top/post/1058.html' target="_blank"><button type="button" class="btn btn-success" style="color:#D3D3D3;">帮助</button></a>
+				<a href='https://cway.top/post/1058.html' target="_blank"><!--<button type="button" class="btn btn-success" style="color:#D3D3D3;">帮助</button>--></a>
 			</form>
 		</div>
 
@@ -57,7 +57,7 @@
 			event.preventDefault();
 			document.getElementById('output_text').value = "请稍后...";
 			// 获取GPT API KEY见：https://platform.openai.com/account/api-keys
-			const apiKey = "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"; //填写你的chatgpt api key
+			const apiKey = "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"; //填写你的chatgpt api key
 			// 调用 GPT-3 API
 			var input = document.getElementById("input_text").value;
 			var model = document.getElementById("model_select").value;
